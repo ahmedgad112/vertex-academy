@@ -5,6 +5,7 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import { useLang } from '@/Composables/useLang';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 
 defineProps({
@@ -15,6 +16,8 @@ defineProps({
         type: String,
     },
 });
+
+const { t } = useLang();
 
 const form = useForm({
     email: '',
@@ -31,7 +34,7 @@ const submit = () => {
 
 <template>
     <GuestLayout>
-        <Head title="Log in" />
+        <Head :title="t('auth.login.title')" />
 
         <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
             {{ status }}
@@ -39,7 +42,7 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel for="email" value="Email" />
+                <InputLabel for="email" :value="t('auth.login.email')" />
 
                 <TextInput
                     id="email"
@@ -55,7 +58,7 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password" value="Password" />
+                <InputLabel for="password" :value="t('auth.login.password')" />
 
                 <TextInput
                     id="password"
@@ -72,9 +75,7 @@ const submit = () => {
             <div class="mt-4 block">
                 <label class="flex items-center">
                     <Checkbox name="remember" v-model:checked="form.remember" />
-                    <span class="ms-2 text-sm text-gray-600"
-                        >Remember me</span
-                    >
+                    <span class="ms-2 text-sm text-gray-600">{{ t('auth.login.remember') }}</span>
                 </label>
             </div>
 
@@ -82,9 +83,9 @@ const submit = () => {
                 <Link
                     v-if="canResetPassword"
                     :href="route('password.request')"
-                    class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-navy focus:ring-offset-2"
                 >
-                    Forgot your password?
+                    {{ t('auth.login.forgot') }}
                 </Link>
 
                 <PrimaryButton
@@ -92,7 +93,7 @@ const submit = () => {
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
-                    Log in
+                    {{ t('auth.login.submit') }}
                 </PrimaryButton>
             </div>
         </form>

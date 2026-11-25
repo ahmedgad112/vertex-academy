@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
@@ -8,10 +8,14 @@ import { Link, usePage } from '@inertiajs/vue3';
 const showingNavigationDropdown = ref(false);
 const page = usePage();
 
-const links = [
-    { name: 'Dashboard', route: 'dashboard', match: 'dashboard' },
+const links = computed(() => [
+    {
+        name: 'Dashboard',
+        route: page.props.auth.user.portal,
+        match: page.props.auth.user.portal,
+    },
     { name: 'Profile', route: 'profile.edit', match: 'profile.*' },
-];
+]);
 
 const isActive = (match) => route().current(match);
 </script>
@@ -21,10 +25,10 @@ const isActive = (match) => route().current(match);
         <div class="lg:flex">
             <!-- Sidebar -->
             <aside
-                class="hidden w-72 shrink-0 flex-col border-r border-navy/10 bg-navy text-ivory lg:flex lg:min-h-screen"
+                class="hidden w-72 shrink-0 flex-col border-e border-navy/10 bg-navy text-ivory lg:flex lg:min-h-screen"
             >
                 <div class="flex items-center gap-3 border-b border-white/10 px-6 py-6">
-                    <Link :href="route('dashboard')" class="flex items-center gap-3">
+                    <Link :href="route($page.props.auth.user.portal)" class="flex items-center gap-3">
                         <span class="h-11 w-11 overflow-hidden rounded-full ring-1 ring-gold/35">
                             <ApplicationLogo />
                         </span>
@@ -82,7 +86,7 @@ const isActive = (match) => route().current(match);
                 <nav class="border-b border-navy/10 bg-white">
                     <div class="flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
                         <div class="flex items-center gap-3 lg:hidden">
-                            <Link :href="route('dashboard')" class="h-9 w-9 overflow-hidden rounded-full">
+                            <Link :href="route($page.props.auth.user.portal)" class="h-9 w-9 overflow-hidden rounded-full">
                                 <ApplicationLogo />
                             </Link>
                             <p class="font-display text-lg font-semibold text-navy">Vertex Desk</p>

@@ -1,6 +1,8 @@
 <script setup>
 import { ref, onMounted, onUnmounted, computed } from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+import LanguageSwitcher from '@/Components/LanguageSwitcher.vue';
+import { useLang } from '@/Composables/useLang';
 import { Link, usePage } from '@inertiajs/vue3';
 
 defineProps({
@@ -9,6 +11,7 @@ defineProps({
 });
 
 const page = usePage();
+const { t, direction } = useLang();
 const scrolled = ref(false);
 const mobileOpen = ref(false);
 
@@ -21,18 +24,18 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll));
 
 const solid = computed(() => scrolled.value || mobileOpen.value);
 
-const navLinks = [
-    { label: 'About', href: '/#about' },
-    { label: 'Schools', href: '/schools' },
-    { label: 'Programs', href: '/#programs' },
-    { label: 'Leadership', href: '/#leadership' },
-    { label: 'News', href: '/#news' },
-    { label: 'Contact', href: '/#contact' },
-];
+const navLinks = computed(() => [
+    { label: t('nav.about'), href: '/#about' },
+    { label: t('nav.schools'), href: '/schools' },
+    { label: t('nav.programs'), href: '/#programs' },
+    { label: t('nav.leadership'), href: '/#leadership' },
+    { label: t('nav.news'), href: '/#news' },
+    { label: t('nav.contact'), href: '/#contact' },
+]);
 </script>
 
 <template>
-    <div class="min-h-screen overflow-x-hidden bg-ivory text-navy-deep">
+    <div class="min-h-screen overflow-x-hidden bg-ivory text-navy-deep" :dir="direction">
         <header
             class="fixed inset-x-0 top-0 z-50 transition-all duration-300"
             :class="
@@ -51,13 +54,13 @@ const navLinks = [
                             class="block truncate font-display text-lg font-semibold tracking-wide transition sm:text-xl"
                             :class="solid ? 'text-navy' : 'text-ivory'"
                         >
-                            Vertex
+                            {{ t('brand.name') }}
                         </span>
                         <span
                             class="hidden text-[0.62rem] font-semibold uppercase tracking-[0.2em] sm:block"
                             :class="solid ? 'text-navy-muted' : 'text-ivory/65'"
                         >
-                            International Academy
+                            {{ t('brand.subtitle') }}
                         </span>
                     </span>
                 </a>
@@ -79,6 +82,8 @@ const navLinks = [
                 </nav>
 
                 <div class="flex items-center gap-2 sm:gap-3">
+                    <LanguageSwitcher class="hidden sm:inline-flex" :solid="solid" compact />
+
                     <template v-if="page.props.auth.user">
                         <Link
                             :href="route('dashboard')"
@@ -89,7 +94,7 @@ const navLinks = [
                                     : 'bg-gold text-navy-deep hover:bg-gold-bright'
                             "
                         >
-                            Dashboard
+                            {{ t('nav.dashboard') }}
                         </Link>
                     </template>
                     <template v-else>
@@ -99,7 +104,7 @@ const navLinks = [
                             class="hidden text-[0.8rem] font-medium transition sm:inline"
                             :class="solid ? 'text-navy-muted hover:text-navy' : 'text-ivory/75 hover:text-ivory'"
                         >
-                            Sign in
+                            {{ t('nav.sign_in') }}
                         </Link>
                         <Link
                             v-if="canRegister"
@@ -111,7 +116,7 @@ const navLinks = [
                                     : 'bg-ivory text-navy hover:bg-gold-soft'
                             "
                         >
-                            Enroll
+                            {{ t('nav.enroll') }}
                         </Link>
                     </template>
 
@@ -125,7 +130,7 @@ const navLinks = [
                         "
                         @click="mobileOpen = !mobileOpen"
                         :aria-expanded="mobileOpen"
-                        aria-label="Toggle menu"
+                        :aria-label="t('nav.toggle_menu')"
                     >
                         <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path
@@ -158,6 +163,9 @@ const navLinks = [
                     >
                         {{ link.label }}
                     </a>
+                    <div class="mt-2 border-t border-navy/10 pt-3">
+                        <LanguageSwitcher solid />
+                    </div>
                 </div>
             </div>
         </header>
@@ -175,43 +183,42 @@ const navLinks = [
                         </span>
                         <div>
                             <p class="font-display text-xl font-semibold sm:text-2xl">
-                                Vertex International Academy
+                                {{ t('brand.full') }}
                             </p>
                             <p class="mt-1 text-[0.65rem] uppercase tracking-[0.22em] text-gold-soft">
-                                Educate · Innovate · Excel
+                                {{ t('brand.tagline') }}
                             </p>
                         </div>
                     </div>
                     <p class="mt-5 max-w-md text-sm leading-relaxed text-ivory/65">
-                        A classic academy for modern healthcare excellence — laboratory medicine,
-                        quality, informatics, and leadership shaped for the AI era.
+                        {{ t('footer.blurb') }}
                     </p>
                 </div>
 
                 <div>
-                    <p class="text-xs font-semibold uppercase tracking-[0.22em] text-gold">Explore</p>
+                    <p class="text-xs font-semibold uppercase tracking-[0.22em] text-gold">{{ t('footer.explore') }}</p>
                     <ul class="mt-4 space-y-2 text-sm text-ivory/70">
-                        <li><a href="/#about" class="hover:text-gold-soft">About the Academy</a></li>
-                        <li><a href="/schools" class="hover:text-gold-soft">Our Schools</a></li>
-                        <li><a href="/#programs" class="hover:text-gold-soft">Programs</a></li>
-                        <li><a href="/#news" class="hover:text-gold-soft">Latest News</a></li>
+                        <li><a href="/#about" class="hover:text-gold-soft">{{ t('footer.about') }}</a></li>
+                        <li><a href="/schools" class="hover:text-gold-soft">{{ t('footer.schools') }}</a></li>
+                        <li><a href="/#programs" class="hover:text-gold-soft">{{ t('footer.programs') }}</a></li>
+                        <li><a href="/#news" class="hover:text-gold-soft">{{ t('footer.news') }}</a></li>
                     </ul>
                 </div>
 
                 <div>
-                    <p class="text-xs font-semibold uppercase tracking-[0.22em] text-gold">Services</p>
+                    <p class="text-xs font-semibold uppercase tracking-[0.22em] text-gold">{{ t('footer.services') }}</p>
                     <ul class="mt-4 space-y-2 text-sm text-ivory/70">
-                        <li>Hands-on Workshops</li>
-                        <li>Experts Free Webinars</li>
-                        <li>Books & Scientific Materials</li>
-                        <li>Accreditation Technical Support</li>
+                        <li>{{ t('footer.workshops') }}</li>
+                        <li>{{ t('footer.webinars') }}</li>
+                        <li>{{ t('footer.materials') }}</li>
+                        <li>{{ t('footer.accreditation') }}</li>
                     </ul>
                 </div>
             </div>
             <div class="border-t border-white/10">
                 <div class="mx-auto flex w-full max-w-6xl flex-col gap-2 px-5 py-5 text-xs text-ivory/45 sm:flex-row sm:items-center sm:justify-between sm:px-8">
-                    <p>© {{ new Date().getFullYear() }} Vertex International Academy. All rights reserved.</p>
-                    <p>Educate · Innovate · Excel</p>
+                    <p>{{ t('footer.rights', { year: new Date().getFullYear() }) }}</p>
+                    <p>{{ t('brand.tagline') }}</p>
                 </div>
             </div>
         </footer>

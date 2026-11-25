@@ -7,8 +7,28 @@
         scroll-behavior: smooth;
     }
 
+    html[dir='ltr'],
+    html[dir='ltr'] body {
+        direction: ltr;
+        text-align: left;
+    }
+
+    html[dir='rtl'],
+    html[dir='rtl'] body {
+        direction: rtl;
+        text-align: right;
+    }
+
     body {
         overflow-x: hidden;
+    }
+
+    html[dir='rtl'] body {
+        font-family: 'Cairo', 'Source Sans 3', ui-sans-serif, system-ui, sans-serif;
+    }
+
+    html[dir='rtl'] .font-display {
+        font-family: 'Cairo', 'Cormorant Garamond', ui-serif, Georgia, serif;
     }
 
     ::selection {
@@ -35,6 +55,6 @@
     }
 
     .gold-rule {
-        @apply h-px w-16 bg-gradient-to-r from-gold to-transparent;
+        @apply h-px w-16 bg-gradient-to-r from-gold to-transparent rtl:bg-gradient-to-l;
     }
 }

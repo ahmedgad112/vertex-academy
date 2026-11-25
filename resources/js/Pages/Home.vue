@@ -1,107 +1,109 @@
 <script setup>
 import MarketingLayout from '@/Layouts/MarketingLayout.vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+import { useLang } from '@/Composables/useLang';
 import { Head, Link } from '@inertiajs/vue3';
+import { computed } from 'vue';
 
 defineProps({
     canLogin: Boolean,
     canRegister: Boolean,
 });
 
-const schools = [
+const { t } = useLang();
+
+const schools = computed(() => [
     {
         code: '01',
         slug: 'laboratory-medicine',
-        name: 'Laboratory Medicine',
-        blurb: 'Clinical diagnostics, microbiology, hematology, molecular biology, and laboratory excellence.',
-        divisions: [
-            'Laboratory Quality Management & Accreditation',
-            'Clinical & Diagnostic Microbiology',
-            'Clinical Parasitology',
-            'Hematology & Transfusion Medicine',
-            'Molecular Biology & Diagnostics',
-        ],
+        name: t('home.school.01.name'),
+        blurb: t('home.school.01.blurb'),
     },
     {
         code: '02',
         slug: 'quality-patient-safety-accreditation',
-        name: 'Quality, Patient Safety & Accreditation',
-        blurb: 'Systems that protect patients and elevate institutional standards across healthcare.',
-        divisions: ['Quality Systems', 'Patient Safety', 'Accreditation Pathways'],
+        name: t('home.school.02.name'),
+        blurb: t('home.school.02.blurb'),
     },
     {
         code: '03',
         slug: 'healthcare-informatics-digital-health',
-        name: 'Healthcare Informatics & Digital Health',
-        blurb: 'Data, digital workflows, and intelligent systems for modern care delivery.',
-        divisions: ['Health Informatics', 'Digital Health', 'Clinical Decision Support'],
+        name: t('home.school.03.name'),
+        blurb: t('home.school.03.blurb'),
     },
     {
         code: '04',
         slug: 'management-leadership-governance',
-        name: 'Management, Leadership & Governance',
-        blurb: 'Leadership craft for healthcare institutions navigating complexity and change.',
-        divisions: ['Healthcare Management', 'Leadership', 'Governance'],
+        name: t('home.school.04.name'),
+        blurb: t('home.school.04.blurb'),
     },
-];
+]);
 
-const objectives = [
-    'Advance scientific competence through rigorous, practice-led curricula.',
-    'Build internationally aligned credentials for healthcare professionals.',
-    'Bridge classic academic depth with intelligent, AI-aware learning.',
-    'Support institutions with accreditation expertise and technical guidance.',
-];
+const objectives = computed(() => [
+    t('home.objectives.1'),
+    t('home.objectives.2'),
+    t('home.objectives.3'),
+    t('home.objectives.4'),
+]);
 
-const achievements = [
-    { value: '4', label: 'Specialized Schools' },
-    { value: '20+', label: 'Program Tracks' },
-    { value: 'Global', label: 'Advisory Network' },
-    { value: 'AI+', label: 'Learning Edge' },
-];
+const achievements = computed(() => [
+    { value: '4', label: t('home.achievements.schools') },
+    { value: '20+', label: t('home.achievements.tracks') },
+    { value: t('home.achievements.global'), label: t('home.achievements.network') },
+    { value: 'AI+', label: t('home.achievements.edge') },
+]);
 
-const services = [
+const services = computed(() => [
     {
-        title: 'Hands-on Workshops',
-        text: 'Intensive practical sessions led by domain experts.',
+        title: t('home.services.workshops.title'),
+        text: t('home.services.workshops.text'),
     },
     {
-        title: 'Experts Free Webinars',
-        text: 'Open knowledge sessions with international faculty.',
+        title: t('home.services.webinars.title'),
+        text: t('home.services.webinars.text'),
     },
     {
-        title: 'Books, Guidelines & Materials',
-        text: 'Curated scientific resources for continuous learning.',
+        title: t('home.services.materials.title'),
+        text: t('home.services.materials.text'),
     },
     {
-        title: 'Accreditation Technical Support',
-        text: 'Ask the experts — guidance for institutional readiness.',
+        title: t('home.services.accreditation.title'),
+        text: t('home.services.accreditation.text'),
     },
-];
+]);
 
-const news = [
+const news = computed(() => [
     {
-        tag: 'Program',
-        title: 'Clinical & Diagnostic Microbiology cohort opens enrollment',
-        date: 'November 2026',
+        tag: t('home.news.1.tag'),
+        title: t('home.news.1.title'),
+        date: t('home.news.1.date'),
     },
     {
-        tag: 'Webinar',
-        title: 'Laboratory quality systems in the age of digital health',
-        date: 'December 2026',
+        tag: t('home.news.2.tag'),
+        title: t('home.news.2.title'),
+        date: t('home.news.2.date'),
     },
     {
-        tag: 'Academy',
-        title: 'International advisory board expands regional presence',
-        date: 'January 2027',
+        tag: t('home.news.3.tag'),
+        title: t('home.news.3.title'),
+        date: t('home.news.3.date'),
     },
-];
+]);
+
+const programItems = computed(() => [
+    t('home.programs.about'),
+    t('home.programs.prereq'),
+    t('home.programs.duration'),
+    t('home.programs.curriculum'),
+    t('home.programs.certs'),
+    t('home.programs.enrollment'),
+]);
 </script>
 
 <template>
-    <Head title="Home" />
+    <Head :title="t('home.title')" />
 
     <MarketingLayout :can-login="canLogin" :can-register="canRegister">
-        <!-- Hero: one composition -->
         <section
             id="top"
             class="relative flex min-h-[100svh] items-center overflow-hidden bg-navy text-ivory"
@@ -122,9 +124,8 @@ const news = [
                     background-size: 64px 64px;"
             />
 
-            <!-- Seal watermark -->
             <div
-                class="pointer-events-none absolute -right-8 top-1/2 hidden w-[28rem] -translate-y-1/2 opacity-[0.16] md:block lg:right-8 lg:w-[34rem] lg:opacity-25"
+                class="pointer-events-none absolute -end-8 top-1/2 hidden w-[28rem] -translate-y-1/2 opacity-[0.16] md:block lg:end-8 lg:w-[34rem] lg:opacity-25"
                 aria-hidden="true"
             >
                 <ApplicationLogo class="h-full w-full" />
@@ -138,17 +139,16 @@ const news = [
                 </div>
 
                 <p class="text-[0.72rem] font-semibold uppercase tracking-[0.32em] text-[#EAD9AE]">
-                    Educate · Innovate · Excel
+                    {{ t('brand.tagline') }}
                 </p>
 
-                <h1 class="mt-4 max-w-4xl text-center font-display text-[2.9rem] font-semibold leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-left lg:text-[4.4rem]">
-                    <span class="block">Vertex</span>
-                    <span class="mt-1 block text-[#E0BD4A]">International Academy</span>
+                <h1 class="mt-4 max-w-4xl text-center font-display text-[2.9rem] font-semibold leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-start lg:text-[4.4rem]">
+                    <span class="block">{{ t('brand.name') }}</span>
+                    <span class="mt-1 block text-[#E0BD4A]">{{ t('brand.subtitle') }}</span>
                 </h1>
 
-                <p class="mt-5 max-w-xl text-center text-base leading-relaxed text-white/75 sm:text-lg lg:text-left">
-                    Classic academic rigor for healthcare professionals —
-                    with a precise, intelligent edge for the age ahead.
+                <p class="mt-5 max-w-xl text-center text-base leading-relaxed text-white/75 sm:text-lg lg:text-start">
+                    {{ t('home.hero.lead') }}
                 </p>
 
                 <div class="mt-8 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
@@ -156,13 +156,13 @@ const news = [
                         href="#schools"
                         class="inline-flex items-center rounded-sm bg-[#C9A227] px-6 py-3 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[#0A1F3D] transition hover:bg-[#E0BD4A]"
                     >
-                        Explore Schools
+                        {{ t('home.hero.cta_schools') }}
                     </a>
                     <a
                         href="#about"
                         class="inline-flex items-center rounded-sm border border-white/30 px-6 py-3 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-white transition hover:border-[#EAD9AE] hover:text-[#EAD9AE]"
                     >
-                        Who We Are
+                        {{ t('home.hero.cta_about') }}
                     </a>
                 </div>
             </div>
@@ -170,112 +170,84 @@ const news = [
             <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-ivory to-transparent sm:h-20" />
         </section>
 
-        <!-- Who We Are -->
         <section id="about" class="relative z-10 -mt-10 border-b border-navy/10 bg-ivory py-20 sm:py-24">
             <div class="section-shell grid gap-10 lg:grid-cols-2 lg:gap-16">
                 <div>
-                    <p class="eyebrow">Who We Are</p>
-                    <h2 class="mt-3 display-title">What We Do</h2>
+                    <p class="eyebrow">{{ t('home.about.eyebrow') }}</p>
+                    <h2 class="mt-3 display-title">{{ t('home.about.title') }}</h2>
                     <div class="gold-rule mt-5" />
                 </div>
                 <div class="space-y-5">
-                    <p class="body-copy">
-                        Vertex International Academy is a specialized learning institution
-                        dedicated to elevating healthcare practice through structured schools,
-                        rigorous programs, and internationally minded faculty.
-                    </p>
-                    <p class="body-copy">
-                        We educate clinicians, laboratory professionals, quality leaders, and
-                        digital health practitioners — combining scholarly depth with applied
-                        competence for institutions that refuse to stand still.
-                    </p>
+                    <p class="body-copy">{{ t('home.about.p1') }}</p>
+                    <p class="body-copy">{{ t('home.about.p2') }}</p>
                 </div>
             </div>
         </section>
 
-        <!-- Vision & Mission -->
         <section class="bg-ivory-warm py-20 sm:py-24">
             <div class="section-shell grid gap-8 md:grid-cols-2">
-                <article class="border-l-2 border-gold bg-white/60 py-2 pl-6 pr-2">
-                    <p class="eyebrow">Vision</p>
+                <article class="border-s-2 border-gold bg-white/60 px-6 py-2">
+                    <p class="eyebrow">{{ t('home.vision.eyebrow') }}</p>
                     <h3 class="mt-3 font-display text-3xl font-semibold text-navy">
-                        A global reference in healthcare education
+                        {{ t('home.vision.title') }}
                     </h3>
-                    <p class="mt-4 body-copy">
-                        To shape professionals who lead laboratories, quality systems, digital
-                        health, and governance with clarity, ethics, and scientific excellence.
-                    </p>
+                    <p class="mt-4 body-copy">{{ t('home.vision.text') }}</p>
                 </article>
-                <article class="border-l-2 border-teal bg-white/60 py-2 pl-6 pr-2">
-                    <p class="eyebrow">Mission</p>
+                <article class="border-s-2 border-teal bg-white/60 px-6 py-2">
+                    <p class="eyebrow">{{ t('home.mission.eyebrow') }}</p>
                     <h3 class="mt-3 font-display text-3xl font-semibold text-navy">
-                        Educate. Innovate. Excel.
+                        {{ t('home.mission.title') }}
                     </h3>
-                    <p class="mt-4 body-copy">
-                        Deliver transformative programs, open expert knowledge, and accreditation
-                        support that move individuals and institutions forward — with classical
-                        discipline and contemporary intelligence.
-                    </p>
+                    <p class="mt-4 body-copy">{{ t('home.mission.text') }}</p>
                 </article>
             </div>
         </section>
 
-        <!-- Leadership -->
         <section id="leadership" class="py-20 sm:py-24">
             <div class="section-shell">
                 <div class="max-w-2xl">
-                    <p class="eyebrow">Leadership</p>
-                    <h2 class="mt-3 display-title">Voices of the Academy</h2>
+                    <p class="eyebrow">{{ t('home.leadership.eyebrow') }}</p>
+                    <h2 class="mt-3 display-title">{{ t('home.leadership.title') }}</h2>
                     <div class="gold-rule mt-5" />
                 </div>
 
                 <div class="mt-12 grid gap-6 lg:grid-cols-2">
                     <article class="bg-navy p-8 text-ivory sm:p-10">
                         <p class="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-gold-soft">
-                            Founder's Message
+                            {{ t('home.founder.label') }}
                         </p>
                         <h3 class="mt-4 font-display text-3xl font-semibold">Prof. Dr. Rania</h3>
-                        <p class="mt-1 text-sm text-ivory/55">Chairman</p>
+                        <p class="mt-1 text-sm text-ivory/55">{{ t('home.founder.role') }}</p>
                         <p class="mt-6 text-base leading-relaxed text-ivory/80">
-                            “Vertex was founded on a simple conviction: excellence in healthcare
-                            begins with disciplined learning. We preserve the dignity of classical
-                            scholarship while preparing minds for an intelligent future.”
+                            {{ t('home.founder.text') }}
                         </p>
                     </article>
 
                     <article class="border border-navy/10 bg-white p-8 sm:p-10">
                         <p class="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-teal">
-                            CEO's Message
+                            {{ t('home.ceo.label') }}
                         </p>
                         <h3 class="mt-4 font-display text-3xl font-semibold text-navy">Dr. Amira</h3>
-                        <p class="mt-1 text-sm text-navy-muted">Chief Executive Officer</p>
-                        <p class="mt-6 body-copy">
-                            “Our academy is built as a living system — schools, programs, workshops,
-                            and expert support working together so every learner and partner
-                            institution can excel with confidence.”
-                        </p>
+                        <p class="mt-1 text-sm text-navy-muted">{{ t('home.ceo.role') }}</p>
+                        <p class="mt-6 body-copy">{{ t('home.ceo.text') }}</p>
                     </article>
                 </div>
 
                 <div class="mt-6 border border-teal/20 bg-teal-mist/50 px-6 py-5 sm:px-8">
                     <p class="text-sm font-semibold uppercase tracking-[0.18em] text-teal-dark">
-                        International Advisory Board
+                        {{ t('home.advisory.title') }}
                     </p>
-                    <p class="mt-2 body-copy">
-                        Guided by scholars and practitioners who keep our curricula aligned with
-                        global standards and emerging science.
-                    </p>
+                    <p class="mt-2 body-copy">{{ t('home.advisory.text') }}</p>
                 </div>
             </div>
         </section>
 
-        <!-- Objectives & Achievements -->
         <section class="bg-navy py-20 text-ivory sm:py-24">
             <div class="section-shell grid gap-14 lg:grid-cols-2">
                 <div>
-                    <p class="eyebrow text-teal-soft">Our Objectives</p>
+                    <p class="eyebrow text-teal-soft">{{ t('home.objectives.eyebrow') }}</p>
                     <h2 class="mt-3 font-display text-4xl font-semibold sm:text-5xl">
-                        Purposeful by design
+                        {{ t('home.objectives.title') }}
                     </h2>
                     <ul class="mt-8 space-y-4">
                         <li
@@ -289,9 +261,9 @@ const news = [
                     </ul>
                 </div>
                 <div>
-                    <p class="eyebrow text-gold-soft">Our Achievements</p>
+                    <p class="eyebrow text-gold-soft">{{ t('home.achievements.eyebrow') }}</p>
                     <h2 class="mt-3 font-display text-4xl font-semibold sm:text-5xl">
-                        Progress with presence
+                        {{ t('home.achievements.title') }}
                     </h2>
                     <div class="mt-8 grid grid-cols-2 gap-4">
                         <div
@@ -311,22 +283,19 @@ const news = [
             </div>
         </section>
 
-        <!-- Schools -->
         <section id="schools" class="py-20 sm:py-24">
             <div class="section-shell">
                 <div class="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
                     <div class="max-w-2xl">
-                        <p class="eyebrow">Our Schools</p>
-                        <h2 class="mt-3 display-title">
-                            Four schools. One academic spine.
-                        </h2>
+                        <p class="eyebrow">{{ t('home.schools.eyebrow') }}</p>
+                        <h2 class="mt-3 display-title">{{ t('home.schools.title') }}</h2>
                         <div class="gold-rule mt-5" />
                     </div>
                     <Link
                         :href="route('schools.index')"
                         class="text-sm font-semibold text-teal transition hover:text-navy"
                     >
-                        View all schools →
+                        {{ t('home.schools.view_all') }}
                     </Link>
                 </div>
 
@@ -357,36 +326,32 @@ const news = [
             </div>
         </section>
 
-        <!-- Program spotlight -->
         <section id="programs" class="bg-ivory-warm py-20 sm:py-24">
             <div class="section-shell grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-14">
                 <div>
-                    <p class="eyebrow">Program Spotlight</p>
-                    <h2 class="mt-3 display-title">
-                        Clinical & Diagnostic Microbiology
-                    </h2>
+                    <p class="eyebrow">{{ t('home.programs.eyebrow') }}</p>
+                    <h2 class="mt-3 display-title">{{ t('home.programs.title') }}</h2>
                     <div class="gold-rule mt-5" />
-                    <p class="mt-5 body-copy">
-                        From scientific direction to enrollment — a complete academic journey
-                        with curriculum depth, credentials, and practitioner-led teaching.
-                    </p>
+                    <p class="mt-5 body-copy">{{ t('home.programs.text') }}</p>
                     <div class="mt-7 space-y-3 text-sm text-navy-muted">
-                        <p><span class="font-semibold text-navy">Scientific Director</span> · Faculty-led oversight</p>
-                        <p><span class="font-semibold text-navy">Board of Speakers</span> · International experts</p>
-                        <p><span class="font-semibold text-navy">Credentials</span> · Certifications & pathways</p>
+                        <p>
+                            <span class="font-semibold text-navy">{{ t('home.programs.director') }}</span>
+                            · {{ t('home.programs.director_value') }}
+                        </p>
+                        <p>
+                            <span class="font-semibold text-navy">{{ t('home.programs.speakers') }}</span>
+                            · {{ t('home.programs.speakers_value') }}
+                        </p>
+                        <p>
+                            <span class="font-semibold text-navy">{{ t('home.programs.credentials') }}</span>
+                            · {{ t('home.programs.credentials_value') }}
+                        </p>
                     </div>
                 </div>
 
                 <div class="grid gap-3 sm:grid-cols-2">
                     <div
-                        v-for="item in [
-                            'About & ILOs',
-                            'Pre-requisites',
-                            'Course Duration',
-                            'Comprehensive Curriculum',
-                            'Certifications',
-                            'Enrollment & Payment',
-                        ]"
+                        v-for="item in programItems"
                         :key="item"
                         class="border border-navy/10 bg-white px-5 py-5"
                     >
@@ -396,12 +361,11 @@ const news = [
             </div>
         </section>
 
-        <!-- Services -->
         <section class="py-20 sm:py-24">
             <div class="section-shell">
                 <div class="max-w-2xl">
-                    <p class="eyebrow">Beyond the classroom</p>
-                    <h2 class="mt-3 display-title">Academy services</h2>
+                    <p class="eyebrow">{{ t('home.services.eyebrow') }}</p>
+                    <h2 class="mt-3 display-title">{{ t('home.services.title') }}</h2>
                     <div class="gold-rule mt-5" />
                 </div>
                 <div class="mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
@@ -421,43 +385,35 @@ const news = [
             </div>
         </section>
 
-        <!-- Accreditations & Partners -->
         <section class="border-y border-navy/10 bg-white py-20 sm:py-24">
             <div class="section-shell grid gap-12 lg:grid-cols-2">
                 <div>
-                    <p class="eyebrow">Trust</p>
-                    <h2 class="mt-3 display-title">International Accreditations</h2>
-                    <p class="mt-5 body-copy">
-                        Pathways aligned with international quality expectations — preparing
-                        professionals and institutions for recognized excellence.
-                    </p>
+                    <p class="eyebrow">{{ t('home.trust.eyebrow') }}</p>
+                    <h2 class="mt-3 display-title">{{ t('home.trust.title') }}</h2>
+                    <p class="mt-5 body-copy">{{ t('home.trust.text') }}</p>
                 </div>
                 <div>
-                    <p class="eyebrow">Alliance</p>
-                    <h2 class="mt-3 display-title">Success Partners</h2>
-                    <p class="mt-5 body-copy">
-                        Academic, clinical, and quality partners who share our commitment to
-                        elevating healthcare education.
-                    </p>
+                    <p class="eyebrow">{{ t('home.alliance.eyebrow') }}</p>
+                    <h2 class="mt-3 display-title">{{ t('home.alliance.title') }}</h2>
+                    <p class="mt-5 body-copy">{{ t('home.alliance.text') }}</p>
                     <div class="mt-7 grid grid-cols-2 gap-3 sm:grid-cols-3">
                         <div
                             v-for="n in 6"
                             :key="n"
                             class="flex h-14 items-center justify-center border border-dashed border-navy/15 bg-ivory text-[0.65rem] uppercase tracking-[0.14em] text-navy-muted"
                         >
-                            Partner {{ n }}
+                            {{ t('home.alliance.partner', { n }) }}
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- News -->
         <section id="news" class="py-20 sm:py-24">
             <div class="section-shell">
                 <div class="max-w-2xl">
-                    <p class="eyebrow">Latest News</p>
-                    <h2 class="mt-3 display-title">From the academy desk</h2>
+                    <p class="eyebrow">{{ t('home.news.eyebrow') }}</p>
+                    <h2 class="mt-3 display-title">{{ t('home.news.title') }}</h2>
                     <div class="gold-rule mt-5" />
                 </div>
 
@@ -473,22 +429,21 @@ const news = [
                         <h3 class="font-display text-2xl font-semibold text-navy">
                             {{ item.title }}
                         </h3>
-                        <p class="text-sm text-navy-muted sm:text-right">{{ item.date }}</p>
+                        <p class="text-sm text-navy-muted sm:text-end">{{ item.date }}</p>
                     </article>
                 </div>
             </div>
         </section>
 
-        <!-- Contact -->
         <section id="contact" class="bg-navy py-20 text-ivory sm:py-24">
             <div class="section-shell grid gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-14">
                 <div>
-                    <p class="eyebrow text-teal-soft">Contact Us</p>
+                    <p class="eyebrow text-teal-soft">{{ t('home.contact.eyebrow') }}</p>
                     <h2 class="mt-3 font-display text-4xl font-semibold sm:text-5xl">
-                        Begin your Vertex journey
+                        {{ t('home.contact.title') }}
                     </h2>
                     <p class="mt-5 max-w-md text-base leading-relaxed text-ivory/65">
-                        Enrollment guidance, partnerships, workshops, or accreditation support.
+                        {{ t('home.contact.text') }}
                     </p>
                     <div class="mt-7 space-y-2 text-sm text-ivory/70">
                         <p>admissions@vertex-academy.com</p>
@@ -499,33 +454,33 @@ const news = [
                         :href="route('register')"
                         class="mt-8 inline-flex rounded-sm bg-gold px-6 py-3 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-navy-deep transition hover:bg-gold-bright"
                     >
-                        Create Account
+                        {{ t('home.contact.create_account') }}
                     </Link>
                 </div>
 
                 <form class="grid gap-4 border border-white/10 bg-white/[0.04] p-6 sm:grid-cols-2 sm:p-8" @submit.prevent>
                     <label class="block">
-                        <span class="text-[0.65rem] uppercase tracking-[0.16em] text-ivory/50">Name</span>
+                        <span class="text-[0.65rem] uppercase tracking-[0.16em] text-ivory/50">{{ t('home.contact.name') }}</span>
                         <input
                             type="text"
                             class="mt-2 w-full border-0 border-b border-white/20 bg-transparent px-0 py-2 text-ivory placeholder:text-ivory/25 focus:border-gold focus:ring-0"
-                            placeholder="Your full name"
+                            :placeholder="t('home.contact.name_ph')"
                         />
                     </label>
                     <label class="block">
-                        <span class="text-[0.65rem] uppercase tracking-[0.16em] text-ivory/50">Email</span>
+                        <span class="text-[0.65rem] uppercase tracking-[0.16em] text-ivory/50">{{ t('home.contact.email') }}</span>
                         <input
                             type="email"
                             class="mt-2 w-full border-0 border-b border-white/20 bg-transparent px-0 py-2 text-ivory placeholder:text-ivory/25 focus:border-gold focus:ring-0"
-                            placeholder="you@example.com"
+                            :placeholder="t('home.contact.email_ph')"
                         />
                     </label>
                     <label class="block sm:col-span-2">
-                        <span class="text-[0.65rem] uppercase tracking-[0.16em] text-ivory/50">Message</span>
+                        <span class="text-[0.65rem] uppercase tracking-[0.16em] text-ivory/50">{{ t('home.contact.message') }}</span>
                         <textarea
                             rows="4"
                             class="mt-2 w-full border-0 border-b border-white/20 bg-transparent px-0 py-2 text-ivory placeholder:text-ivory/25 focus:border-gold focus:ring-0"
-                            placeholder="How can the academy help?"
+                            :placeholder="t('home.contact.message_ph')"
                         />
                     </label>
                     <div class="sm:col-span-2">
@@ -533,7 +488,7 @@ const news = [
                             type="submit"
                             class="rounded-sm border border-gold/45 px-6 py-3 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-gold-soft transition hover:bg-gold hover:text-navy-deep"
                         >
-                            Send Message
+                            {{ t('home.contact.send') }}
                         </button>
                     </div>
                 </form>

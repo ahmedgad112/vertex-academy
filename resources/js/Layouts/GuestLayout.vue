@@ -1,10 +1,17 @@
 <script setup>
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+import LanguageSwitcher from '@/Components/LanguageSwitcher.vue';
+import { useLang } from '@/Composables/useLang';
 import { Link } from '@inertiajs/vue3';
+
+const { t, direction } = useLang();
 </script>
 
 <template>
-    <div class="relative flex min-h-screen flex-col items-center overflow-x-hidden bg-ivory pt-8 sm:justify-center sm:pt-0">
+    <div
+        class="relative flex min-h-screen flex-col items-center overflow-x-hidden bg-ivory pt-8 sm:justify-center sm:pt-0"
+        :dir="direction"
+    >
         <div
             class="pointer-events-none absolute inset-0"
             style="background:
@@ -12,15 +19,19 @@ import { Link } from '@inertiajs/vue3';
                 radial-gradient(ellipse 40% 30% at 90% 80%, rgba(201,162,39,0.1), transparent 50%);"
         />
 
+        <div class="absolute end-4 top-4 z-10 sm:end-8 sm:top-8">
+            <LanguageSwitcher solid />
+        </div>
+
         <div class="relative">
             <Link :href="route('home')" class="flex flex-col items-center gap-3">
                 <span class="h-20 w-20 overflow-hidden rounded-full shadow-lg ring-1 ring-gold/35">
                     <ApplicationLogo />
                 </span>
                 <div class="text-center">
-                    <p class="font-display text-2xl font-semibold text-navy">Vertex Academy</p>
+                    <p class="font-display text-2xl font-semibold text-navy">{{ t('brand.full') }}</p>
                     <p class="text-[0.62rem] uppercase tracking-[0.24em] text-navy-muted">
-                        Educate · Innovate · Excel
+                        {{ t('brand.tagline') }}
                     </p>
                 </div>
             </Link>
