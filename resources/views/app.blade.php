@@ -6,6 +6,13 @@
 
         <title inertia>{{ config('app.name', 'Vertex Academy') }}</title>
 
+        <link rel="icon" href="/favicon.ico" sizes="any">
+        <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32">
+        <link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16">
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+        <link rel="manifest" href="/site.webmanifest">
+        <meta name="theme-color" content="#0E2B53">
+
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=cairo:400,500,600,700|cormorant-garamond:500,600,700|source-sans-3:400,500,600,700&display=swap" rel="stylesheet" />
 
